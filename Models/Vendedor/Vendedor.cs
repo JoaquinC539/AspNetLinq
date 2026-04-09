@@ -14,6 +14,6 @@ public class Vendedor
     [Required][EmailAddress][StringLength(50)]
     public string Email { get; set; } = string.Empty;
     [StringLength(20)]
-    public string CodigoEmpleado { get; init; } = string.Empty;
+    public string CodigoEmpleado { get; set; } = string.Empty;
     
 }
