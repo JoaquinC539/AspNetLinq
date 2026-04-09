@@ -1,3 +1,8 @@
-.bin/
-.obj/
-./.idea/
+bin/*
+obj/*
+.idea
+.xdp-*
+Company.db
+Company.db-*
+Folder.DotSettings.user
+AspNetLinq.sln
