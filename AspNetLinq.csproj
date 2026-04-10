@@ -20,4 +20,8 @@
       <Content Include="Folder.DotSettings.user" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Repository\Impl\" />
+    </ItemGroup>
+
 </Project>

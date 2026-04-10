@@ -19,10 +19,23 @@ public class VendedorController : ControllerBase
     }
     
     [HttpPost]
-    public ActionResult<IEnumerable<Vendedor>> Post([FromBody] Vendedor vendedor)
+    public ActionResult<Vendedor> Post([FromBody] Vendedor vendedor)
     {
         _logger.LogInformation("At Vendedor Post Controller");
         return Ok(_vendedorService.Post(vendedor));
+    }
+
+    [HttpGet]
+    public ActionResult<List<Vendedor>> GetAll([FromQuery] int? limit = null, [FromQuery] int? offset = null)
+    {
+        return Ok(_vendedorService.GetAll(limit , offset ));
+    }
+
+    [HttpGet]
+    [Route("count")]
+    public ActionResult<int> Count()
+    {
+        return Ok(_vendedorService.GetCount());
     }
     
 }

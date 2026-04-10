@@ -1,3 +1,4 @@
+using AspNetLinq.Excpetions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetLinq.Middleware;
@@ -25,9 +26,24 @@ public class ExceptionHandlerMiddleware
         {
             await _next(httpContext);
         }
+        catch (CompanyException e)
+        {
+            _logger.LogError($"Company Exception ocurred: {e.Message}");
+            httpContext.Response.StatusCode = 409;
+            httpContext.Response.ContentType = "application/json";
+            var problemDetail = new ErrorResponse
+            {
+                Message = e.Message,
+                StatusCode = 409,
+                Title = "Logic error",
+            };
+            httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+            httpContext.Response.ContentType = "application/json";
+            await httpContext.Response.WriteAsJsonAsync(problemDetail);
+        }
         catch (Exception e)
         {
-            _logger.LogError($"Exception ocurred: {e.Message}");
+            _logger.LogError($"Unhandled Exception ocurred: {e.Message}");
             var problemDetail = new ErrorResponse
             {
                 Message = e.Message,

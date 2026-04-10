@@ -22,4 +22,20 @@ public class VendedorService : IVendedorService
         _context.SaveChanges();
         return vendedor;
     }
+
+    public List<Vendedor> GetAll(int? limit, int? offset)
+    {
+        offset ??= 0;
+        limit ??= 10;
+        return _context.Vendedores
+            .Skip((int)offset * (int)limit)
+            .Take((int)limit )
+            .ToList();
+            
+    }
+
+    public int GetCount()
+    {
+        return _context.Vendedores.Count();
+    }
 }
