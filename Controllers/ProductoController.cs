@@ -29,7 +29,15 @@ public class ProductoController : ControllerBase
     {
         return Ok(_productoService.GetAll(limit, offset, marcaId));
     }
-
+    
+    [HttpGet]
+    [Route("native")]
+    public ActionResult<IEnumerable<Producto>> GetAllNative([FromQuery] int? offset, [FromQuery] int? limit,
+        [FromQuery] int? marcaId)
+    {
+        return Ok(_productoService.GetAllNative(limit, offset, marcaId));
+    }
+    
     [HttpGet]
     [Route("count")]
     public ActionResult<int> Count()

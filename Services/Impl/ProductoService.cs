@@ -37,6 +37,14 @@ public class ProductoService : IProductoService
 
     }
     
+    public List<ProductoDto> GetAllNative(int? limit, int? offset, int? marcaId)
+    {
+        limit ??= 10;
+        offset ??= 0;
+        return _productoRepository.GetAllNativeQuery((int)limit, (int)offset, marcaId);
+
+    }
+    
     public int GetCount()
     {
         return _context.Productos.Count();

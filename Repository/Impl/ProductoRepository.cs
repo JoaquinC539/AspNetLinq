@@ -1,5 +1,7 @@
 using AspNetLinq.Contexts;
 using AspNetLinq.Models.Producto;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetLinq.Repository.Impl;
 
@@ -37,5 +39,16 @@ public class ProductoRepository: IProductoRepository
         query = query.Skip((int)offset * (int)limit);
         query=query.Take((int)limit );
         return query.ToList();
+    }
+
+    public List<ProductoDto> GetAllNativeQuery(int limit, int offset, int? marcaId)
+    {
+        return _context.Database.SqlQuery<ProductoDto>($@"
+            SELECT pd.*,m.Nombre MarcaNombre FROM Productos pd
+            JOIN Marcas m ON pd.MarcaId = m.Id
+            WHERE m.Id = {marcaId} OR  {marcaId} IS NULL
+            LIMIT {limit} OFFSET {offset}
+        ")
+            .ToList();
     }
 }
