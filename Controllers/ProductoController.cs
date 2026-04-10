@@ -27,7 +27,7 @@ public class ProductoController : ControllerBase
     public ActionResult<IEnumerable<Producto>> GetAll([FromQuery] int? offset, [FromQuery] int? limit,
         [FromQuery] int? marcaId)
     {
-        return Ok(_productoService.GetAll(offset, limit, marcaId));
+        return Ok(_productoService.GetAll(limit, offset, marcaId));
     }
 
     [HttpGet]

@@ -1,5 +1,7 @@
 using AspNetLinq.Contexts;
 using AspNetLinq.Middleware;
+using AspNetLinq.Repository;
+using AspNetLinq.Repository.Impl;
 using AspNetLinq.Services;
 using AspNetLinq.Services.Impl;
 
@@ -16,7 +18,9 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IVendedorService, VendedorService>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IVentaService, VentaService>();
+
 
 var connectionString = builder.Configuration.GetConnectionString("Company") ?? "Data Source=Company.db";
 builder.Services.AddSqlite<DataContext>(connectionString);

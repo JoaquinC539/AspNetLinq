@@ -1,6 +1,7 @@
 using AspNetLinq.Contexts;
 using AspNetLinq.Excpetions;
 using AspNetLinq.Models.Producto;
+using AspNetLinq.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +11,13 @@ public class ProductoService : IProductoService
 {
     private readonly ILogger<ProductoService> _logger;
     private readonly DataContext _context;
+    private IProductoRepository _productoRepository;
 
-    public ProductoService(ILogger<ProductoService> logger, DataContext context)
+    public ProductoService(ILogger<ProductoService> logger, DataContext context,  IProductoRepository productoRepository)
     {
         _logger = logger;
         _context = context;
+        _productoRepository = productoRepository;
     }
 
     public Producto Post(Producto producto)
@@ -30,28 +33,7 @@ public class ProductoService : IProductoService
     {
         limit ??= 10;
         offset ??= 0;
-        var query = (from producto in _context.Productos
-                join marca in _context.Marcas on producto.MarcaId equals marca.Id
-                select new ProductoDto
-                {
-                    Id = producto.Id,
-                    CodigoProducto = producto.CodigoProducto,
-                    MarcaId = marca.Id,
-                    Nombre = producto.Nombre,
-                    Precio = producto.Precio,
-                    Descripcion = producto.Descripcion,
-                    MarcaNombre = marca.Nombre
-                }
-                
-            );
-        if (marcaId != null)
-        {
-            query = query.Where(m => m.MarcaId == marcaId);
-        }
-
-        query = query.Skip((int)offset * (int)limit);
-        query=query.Take((int)limit );
-        return query.ToList();
+       return _productoRepository.GetAllQueriable((int)limit, (int)offset, marcaId);
 
     }
     
