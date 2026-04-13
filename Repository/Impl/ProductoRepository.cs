@@ -15,7 +15,8 @@ public class ProductoRepository: IProductoRepository
         _logger = logger;
         _context = context;
     }
-    public List<ProductoDto> GetAllQueriable(int limit, int offset, int? marcaId)
+
+    private IQueryable<ProductoDto> GetBaseQuery(int limit, int offset, int? marcaId,bool count)
     {
         var query = (from producto in _context.Productos
                 join marca in _context.Marcas on producto.MarcaId equals marca.Id
@@ -36,8 +37,17 @@ public class ProductoRepository: IProductoRepository
             query = query.Where(m => m.MarcaId == marcaId);
         }
 
-        query = query.Skip((int)offset * (int)limit);
-        query=query.Take((int)limit );
+        if (!count)
+        {
+            query = query.Skip((int)offset * (int)limit);
+            query=query.Take((int)limit );
+        }
+        
+        return  query;
+    }
+    public List<ProductoDto> GetAllQueriable(int limit, int offset, int? marcaId)
+    {
+        var query = GetBaseQuery(limit, offset, marcaId,false);
         return query.ToList();
     }
 
@@ -50,5 +60,11 @@ public class ProductoRepository: IProductoRepository
             LIMIT {limit} OFFSET {offset}
         ")
             .ToList();
+    }
+
+    public int CountQueryable(int limit, int offset, int? marcaId)
+    {
+        var query = GetBaseQuery(limit, offset, marcaId,true);
+        return query.Count();
     }
 }

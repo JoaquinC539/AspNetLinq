@@ -10,5 +10,5 @@ public interface IProductoService
     
     public List<ProductoDto> GetAllNative(int? limit,int? offset,int? marcaId);
     
-    public int GetCount();
+    public int GetCount(int? limit,int? offset,int? marcaId);
 }

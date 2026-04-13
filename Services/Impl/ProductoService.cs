@@ -45,8 +45,10 @@ public class ProductoService : IProductoService
 
     }
     
-    public int GetCount()
+    public int GetCount(int? limit,int? offset,int? marcaId)
     {
-        return _context.Productos.Count();
+        limit ??= 10;
+        offset ??= 0;
+        return _productoRepository.CountQueryable((int)limit, (int)offset,marcaId);
     }
 }

@@ -40,9 +40,10 @@ public class ProductoController : ControllerBase
     
     [HttpGet]
     [Route("count")]
-    public ActionResult<int> Count()
+    public ActionResult<int> Count([FromQuery] int? offset, [FromQuery] int? limit,
+        [FromQuery] int? marcaId)
     {
-        return Ok(_productoService.GetCount());
+        return Ok(_productoService.GetCount(limit, offset, marcaId));
     }
     
 }

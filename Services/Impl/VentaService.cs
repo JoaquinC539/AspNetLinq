@@ -22,4 +22,16 @@ public class VentaService : IVentaService
         _context.SaveChanges();
         return venta;
     }
+
+    public IEnumerable<VentaDTO> GetAll(int? limit, int? offser, int? vendedorId, int? productoId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetCount()
+    {
+        return _context.Ventas.Count();
+    }
+
+    
 }
