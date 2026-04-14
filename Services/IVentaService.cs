@@ -6,7 +6,7 @@ public interface IVentaService
 {
     public Venta Post(Venta venta);
 
-    public IEnumerable<VentaDTO> GetAll(int? limit, int? offser, int? vendedorId, int? productoId);
+    public IEnumerable<VentaDTO> GetAll(int? limit, int? offset, int? vendedorId, int? productoId);
 
-    public int GetCount();
+    public int GetCount(int? limit, int? offset, int? vendedorId, int? productoId);
 }

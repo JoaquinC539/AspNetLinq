@@ -22,6 +22,21 @@ public class VentaController :ControllerBase
     {
         return Ok(_ventaService.Post(venta));
     }
+
+    [HttpGet]
+    public ActionResult<VentaDTO> Get([FromQuery] int? offset, [FromQuery] int? limit,
+        [FromQuery] int? vendedorId, [FromQuery] int? productoId)
+    {
+        return Ok(_ventaService.GetAll(limit, offset, vendedorId, productoId));
+    }
+
+    [HttpGet]
+    [Route("count")]
+    public ActionResult<int> Count([FromQuery] int? offset, [FromQuery] int? limit,
+        [FromQuery] int? vendedorId, [FromQuery] int? productoId)
+    {
+        return Ok(_ventaService.GetCount(limit, offset, vendedorId, productoId));
+    }
     
     
 }

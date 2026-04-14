@@ -20,6 +20,7 @@ builder.Services.AddScoped<IMarcaService, MarcaService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IVentaService, VentaService>();
+builder.Services.AddScoped<IVentaRepository, VentaRepository>();
 
 
 var connectionString = builder.Configuration.GetConnectionString("Company") ?? "Data Source=Company.db";

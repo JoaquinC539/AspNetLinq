@@ -6,5 +6,6 @@ public class VentaDTO : Venta
     public double Total { get; set; }
     public string NombreVendedor { get; set; }
     public string NombreProducto { get; set; }
+    public double PrecioProducto { get; set; }
     
 }

@@ -1,6 +1,7 @@
 using AspNetLinq.Contexts;
 using AspNetLinq.Excpetions;
 using AspNetLinq.Models.Venta;
+using AspNetLinq.Repository;
 
 namespace AspNetLinq.Services.Impl;
 
@@ -8,11 +9,13 @@ public class VentaService : IVentaService
 {
     private readonly ILogger<VentaService> _logger;
     private readonly DataContext _context;
+    private readonly IVentaRepository ventaRepository;
 
-    public VentaService(DataContext context, ILogger<VentaService> logger)
+    public VentaService(DataContext context, ILogger<VentaService> logger, IVentaRepository ventaRepository)
     {
         _context = context;
         _logger = logger;
+        this.ventaRepository = ventaRepository;
     }
     public Venta Post(Venta venta)
     {
@@ -23,14 +26,18 @@ public class VentaService : IVentaService
         return venta;
     }
 
-    public IEnumerable<VentaDTO> GetAll(int? limit, int? offser, int? vendedorId, int? productoId)
+    public IEnumerable<VentaDTO> GetAll(int? limit, int? offset, int? vendedorId, int? productoId)
     {
-        throw new NotImplementedException();
+        limit ??= 10;
+        offset ??= 0;
+        return ventaRepository.GetVentas((int) limit, (int) offset, vendedorId, productoId);
     }
 
-    public int GetCount()
+    public int GetCount(int? limit, int? offset, int? vendedorId, int? productoId)
     {
-        return _context.Ventas.Count();
+        limit ??= 10;
+        offset ??= 0;
+        return ventaRepository.GetVentasCount((int) limit, (int) offset, vendedorId, productoId);
     }
 
     
